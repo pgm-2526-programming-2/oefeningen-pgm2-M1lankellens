@@ -1,0 +1,52 @@
+[
+  {
+    "id": 1,
+    "naam": "Bohemian Rhapsody",
+    "bpm": 72,
+    "duur": 355,
+    "jaar": 1975,
+    "artiesten": ["Queen"],
+    "genres": ["Rock", "Progressive Rock"],
+    "spotify_url": "https://open.spotify.com/track/6l8GvAyoUZwWDgF1e4822w"
+  },
+  {
+    "id": 2,
+    "naam": "Billie Jean",
+    "bpm": 117,
+    "duur": 294,
+    "jaar": 1983,
+    "artiesten": ["Michael Jackson"],
+    "genres": ["Pop", "R&B"],
+    "spotify_url": "https://open.spotify.com/track/7J1uxwnxfQLu4APicE5Rnj"
+  },
+  {
+    "id": 3,
+    "naam": "Smells Like Teen Spirit",
+    "bpm": 117,
+    "duur": 301,
+    "jaar": 1991,
+    "artiesten": ["Nirvana"],
+    "genres": ["Grunge", "Alternative Rock"],
+    "spotify_url": "https://open.spotify.com/track/4CeeEOM32jQcH3eN9Q2dGj"
+  },
+  {
+    "id": 4,
+    "naam": "Hotel California",
+    "bpm": 75,
+    "duur": 391,
+    "jaar": 1976,
+    "artiesten": ["Eagles"],
+    "genres": ["Rock", "Soft Rock"],
+    "spotify_url": "https://open.spotify.com/track/40riOy7x9W7GXjyGp4pjAv"
+  },
+  {
+    "id": 5,
+    "naam": "Shape of You",
+    "bpm": 96,
+    "duur": 233,
+    "jaar": 2017,
+    "artiesten": ["Ed Sheeran"],
+    "genres": ["Pop", "Dancehall"],
+    "spotify_url": "https://open.spotify.com/track/7qiZfU4dY1lWllzX7mPBI3"
+  }
+]
