@@ -1,9 +1,33 @@
 const fs = require('fs').promises;
 const path = require('path');
+const Joi = require('joi');
 
 const tracksFilePath = path.join(__dirname, '../models/tracks.json');
 
-// Lees alle tracks uit de JSON, geeft lege array terug bij fout
+// Joi schema voor POST
+const trackSchemaCreate = Joi.object({
+  naam: Joi.string().required(),
+  bpm: Joi.number().integer().required(),
+  duur: Joi.number().integer().required(),
+  jaar: Joi.number().integer().required(),
+  artiesten: Joi.array().items(Joi.string()).required(),
+  genres: Joi.array().items(Joi.string()).required(),
+  spotify_url: Joi.string().allow('').optional()
+});
+
+// Joi schema voor PUT
+const trackSchemaUpdate = Joi.object({
+  id: Joi.number().integer().required(),
+  naam: Joi.string().required(),
+  bpm: Joi.number().integer().required(),
+  duur: Joi.number().integer().required(),
+  jaar: Joi.number().integer().required(),
+  artiesten: Joi.array().items(Joi.string()).required(),
+  genres: Joi.array().items(Joi.string()).required(),
+  spotify_url: Joi.string().allow('').optional()
+});
+
+// Lees alle tracks uit de JSON
 const readTracks = async () => {
   try {
     const data = await fs.readFile(tracksFilePath, 'utf8');
@@ -18,33 +42,12 @@ const writeTracks = async (tracks) => {
   await fs.writeFile(tracksFilePath, JSON.stringify(tracks, null, 2));
 };
 
-// Controleert of alle verplichte velden aanwezig zijn
-const validateRequiredFields = (body) => {
-  const { naam, bpm, duur, jaar, artiesten, genres } = body;
-  return naam && bpm && duur && jaar && artiesten && genres;
-};
-
-// Maak een track object
-const createTrackObject = (body, id = null) => {
-  const { naam, bpm, duur, jaar, artiesten, genres, spotify_url } = body;
-  return {
-    ...(id && { id }),
-    naam,
-    bpm: parseInt(bpm),
-    duur: parseInt(duur),
-    jaar: parseInt(jaar),
-    artiesten: Array.isArray(artiesten) ? artiesten : [artiesten],
-    genres: Array.isArray(genres) ? genres : [genres],
-    spotify_url: spotify_url || ''
-  };
-};
-
 // Zoekt array index van een track op basis van ID
 const findTrackIndex = (tracks, id) => {
   return tracks.findIndex(t => t.id === parseInt(id));
 };
 
-// Haal alle tracks op met optionele sorting, geeft JSON response met tracks array
+// Haal alle tracks op met optionele sorting
 const getAllTracks = async (req, res) => {
   try {
     let tracks = await readTracks();
@@ -69,17 +72,14 @@ const getAllTracks = async (req, res) => {
   }
 };
 
-// Haal specifieke track op via ID, geeft 404 als niet gevonden
+// Haal specifieke track op via ID, geeft 404 met leeg object als niet gevonden
 const getTrackById = async (req, res) => {
   try {
     const tracks = await readTracks();
     const track = tracks.find(t => t.id === parseInt(req.params.id));
     
     if (!track) {
-      return res.status(404).json({
-        success: false,
-        message: `Track with id ${req.params.id} not found`
-      });
+      return res.status(404).json({});
     }
     
     res.json({
@@ -94,19 +94,30 @@ const getTrackById = async (req, res) => {
   }
 };
 
-// Maak een nieuwe track aan, controleert eerst of alle velden aanwezig zijn
+// Maak een nieuwe track aan met Joi validatie
 const createTrack = async (req, res) => {
   try {
-    if (!validateRequiredFields(req.body)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Missing required fields: naam, bpm, duur, jaar, artiesten, genres'
+    const { error } = trackSchemaCreate.validate(req.body);
+    
+    if (error) {
+      return res.status(400).json({ 
+        error: error.details[0].message 
       });
     }
 
     const tracks = await readTracks();
     const newId = tracks.length > 0 ? Math.max(...tracks.map(t => t.id)) + 1 : 1;
-    const newTrack = createTrackObject(req.body, newId);
+    
+    const newTrack = {
+      id: newId,
+      naam: req.body.naam,
+      bpm: req.body.bpm,
+      duur: req.body.duur,
+      jaar: req.body.jaar,
+      artiesten: req.body.artiesten,
+      genres: req.body.genres,
+      spotify_url: req.body.spotify_url || ''
+    };
     
     tracks.push(newTrack);
     await writeTracks(tracks);
@@ -123,13 +134,14 @@ const createTrack = async (req, res) => {
   }
 };
 
-// Update een volledige track, alle velden zijn verplicht
+// Update een volledige track met Joi validatie (id verplicht in body)
 const updateTrack = async (req, res) => {
   try {
-    if (!validateRequiredFields(req.body)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Missing required fields: naam, bpm, duur, jaar, artiesten, genres'
+    const { error } = trackSchemaUpdate.validate(req.body);
+    
+    if (error) {
+      return res.status(400).json({ 
+        error: error.details[0].message 
       });
     }
 
@@ -137,13 +149,20 @@ const updateTrack = async (req, res) => {
     const trackIndex = findTrackIndex(tracks, req.params.id);
     
     if (trackIndex === -1) {
-      return res.status(404).json({
-        success: false,
-        message: `Track with id ${req.params.id} not found`
-      });
+      return res.status(404).json({});
     }
     
-    const updatedTrack = createTrackObject(req.body, parseInt(req.params.id));
+    const updatedTrack = {
+      id: parseInt(req.params.id),
+      naam: req.body.naam,
+      bpm: req.body.bpm,
+      duur: req.body.duur,
+      jaar: req.body.jaar,
+      artiesten: req.body.artiesten,
+      genres: req.body.genres,
+      spotify_url: req.body.spotify_url || ''
+    };
+    
     tracks[trackIndex] = updatedTrack;
     await writeTracks(tracks);
     
@@ -166,21 +185,18 @@ const patchTrack = async (req, res) => {
     const trackIndex = findTrackIndex(tracks, req.params.id);
     
     if (trackIndex === -1) {
-      return res.status(404).json({
-        success: false,
-        message: `Track with id ${req.params.id} not found`
-      });
+      return res.status(404).json({});
     }
     
     const updatedTrack = { ...tracks[trackIndex] };
     const { naam, bpm, duur, jaar, artiesten, genres, spotify_url } = req.body;
     
     if (naam) updatedTrack.naam = naam;
-    if (bpm) updatedTrack.bpm = parseInt(bpm);
-    if (duur) updatedTrack.duur = parseInt(duur);
-    if (jaar) updatedTrack.jaar = parseInt(jaar);
-    if (artiesten) updatedTrack.artiesten = Array.isArray(artiesten) ? artiesten : [artiesten];
-    if (genres) updatedTrack.genres = Array.isArray(genres) ? genres : [genres];
+    if (bpm) updatedTrack.bpm = bpm;
+    if (duur) updatedTrack.duur = duur;
+    if (jaar) updatedTrack.jaar = jaar;
+    if (artiesten) updatedTrack.artiesten = artiesten;
+    if (genres) updatedTrack.genres = genres;
     if (spotify_url !== undefined) updatedTrack.spotify_url = spotify_url;
     
     tracks[trackIndex] = updatedTrack;
@@ -198,17 +214,14 @@ const patchTrack = async (req, res) => {
   }
 };
 
-// Verwijder track uit de database
+// Verwijder track, geeft 404 met leeg object als niet gevonden
 const deleteTrack = async (req, res) => {
   try {
     const tracks = await readTracks();
     const trackIndex = findTrackIndex(tracks, req.params.id);
     
     if (trackIndex === -1) {
-      return res.status(404).json({
-        success: false,
-        message: `Track with id ${req.params.id} not found`
-      });
+      return res.status(404).json({});
     }
     
     const deletedTrack = tracks[trackIndex];
