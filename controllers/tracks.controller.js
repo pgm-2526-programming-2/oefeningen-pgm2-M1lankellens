@@ -1,10 +1,18 @@
+/**
+ * @fileoverview Controller voor tracks resource
+ * @module controllers/tracks
+ */
+
 const fs = require('fs').promises;
 const path = require('path');
 const Joi = require('joi');
 
 const tracksFilePath = path.join(__dirname, '../models/tracks.json');
 
-// Joi schema voor POST
+/**
+ * Joi validatie schema voor het aanmaken van een track (POST)
+ * @type {Joi.ObjectSchema}
+ */
 const trackSchemaCreate = Joi.object({
   naam: Joi.string().required(),
   bpm: Joi.number().integer().required(),
@@ -15,7 +23,10 @@ const trackSchemaCreate = Joi.object({
   spotify_url: Joi.string().allow('').optional()
 });
 
-// Joi schema voor PUT
+/**
+ * Joi validatie schema voor het updaten van een track (PUT)
+ * @type {Joi.ObjectSchema}
+ */
 const trackSchemaUpdate = Joi.object({
   id: Joi.number().integer().required(),
   naam: Joi.string().required(),
@@ -27,7 +38,11 @@ const trackSchemaUpdate = Joi.object({
   spotify_url: Joi.string().allow('').optional()
 });
 
-// Lees alle tracks uit de JSON
+/**
+ * Leest alle tracks uit het JSON bestand
+ * @async
+ * @returns {Promise<Array>} Array van track objecten
+ */
 const readTracks = async () => {
   try {
     const data = await fs.readFile(tracksFilePath, 'utf8');
@@ -37,17 +52,35 @@ const readTracks = async () => {
   }
 };
 
-// Schrijf tracks array naar het JSON bestand
+/**
+ * Schrijft tracks array naar het JSON bestand
+ * @async
+ * @param {Array} tracks - Array van track objecten
+ * @returns {Promise<void>}
+ */
 const writeTracks = async (tracks) => {
   await fs.writeFile(tracksFilePath, JSON.stringify(tracks, null, 2));
 };
 
-// Zoekt array index van een track op basis van ID
+/**
+ * Zoekt de index van een track in de array op basis van ID
+ * @param {Array} tracks - Array van track objecten
+ * @param {string|number} id - Track ID
+ * @returns {number} Index van de track, of -1 als niet gevonden
+ */
 const findTrackIndex = (tracks, id) => {
   return tracks.findIndex(t => t.id === parseInt(id));
 };
 
-// Haal alle tracks op met optionele sorting
+/**
+ * Haalt alle tracks op met optionele sorting
+ * @async
+ * @param {Object} req - Express request object
+ * @param {Object} req.query - Query parameters
+ * @param {string} [req.query.sort] - Sorteerrichting ('asc' of 'desc')
+ * @param {Object} res - Express response object
+ * @returns {Object} JSON response met tracks array en count
+ */
 const getAllTracks = async (req, res) => {
   try {
     let tracks = await readTracks();
@@ -72,7 +105,15 @@ const getAllTracks = async (req, res) => {
   }
 };
 
-// Haal specifieke track op via ID, geeft 404 met leeg object als niet gevonden
+/**
+ * Haalt een specifieke track op via ID
+ * @async
+ * @param {Object} req - Express request object
+ * @param {Object} req.params - Route parameters
+ * @param {string} req.params.id - Track ID
+ * @param {Object} res - Express response object
+ * @returns {Object} JSON response met track data of leeg object bij 404
+ */
 const getTrackById = async (req, res) => {
   try {
     const tracks = await readTracks();
@@ -94,7 +135,21 @@ const getTrackById = async (req, res) => {
   }
 };
 
-// Maak een nieuwe track aan met Joi validatie
+/**
+ * Maakt een nieuwe track aan met Joi validatie
+ * @async
+ * @param {Object} req - Express request object
+ * @param {Object} req.body - Request body met track data
+ * @param {string} req.body.naam - Naam van de track
+ * @param {number} req.body.bpm - Beats per minute
+ * @param {number} req.body.duur - Duur in seconden
+ * @param {number} req.body.jaar - Jaar van uitgave
+ * @param {string[]} req.body.artiesten - Array van artiesten
+ * @param {string[]} req.body.genres - Array van genres
+ * @param {string} [req.body.spotify_url] - Spotify URL (optioneel)
+ * @param {Object} res - Express response object
+ * @returns {Object} JSON response met nieuwe track of error
+ */
 const createTrack = async (req, res) => {
   try {
     const { error } = trackSchemaCreate.validate(req.body);
@@ -134,7 +189,24 @@ const createTrack = async (req, res) => {
   }
 };
 
-// Update een volledige track met Joi validatie (id verplicht in body)
+/**
+ * Update een volledige track met Joi validatie (id verplicht in body)
+ * @async
+ * @param {Object} req - Express request object
+ * @param {Object} req.params - Route parameters
+ * @param {string} req.params.id - Track ID
+ * @param {Object} req.body - Request body met alle track velden
+ * @param {number} req.body.id - Track ID (verplicht in body)
+ * @param {string} req.body.naam - Naam van de track
+ * @param {number} req.body.bpm - Beats per minute
+ * @param {number} req.body.duur - Duur in seconden
+ * @param {number} req.body.jaar - Jaar van uitgave
+ * @param {string[]} req.body.artiesten - Array van artiesten
+ * @param {string[]} req.body.genres - Array van genres
+ * @param {string} [req.body.spotify_url] - Spotify URL (optioneel)
+ * @param {Object} res - Express response object
+ * @returns {Object} JSON response met geüpdatete track of error
+ */
 const updateTrack = async (req, res) => {
   try {
     const { error } = trackSchemaUpdate.validate(req.body);
@@ -178,7 +250,23 @@ const updateTrack = async (req, res) => {
   }
 };
 
-// Update specifieke velden van track, andere velden blijven ongewijzigd
+/**
+ * Update specifieke velden van een track (PATCH)
+ * @async
+ * @param {Object} req - Express request object
+ * @param {Object} req.params - Route parameters
+ * @param {string} req.params.id - Track ID
+ * @param {Object} req.body - Request body met velden om te updaten
+ * @param {string} [req.body.naam] - Naam van de track
+ * @param {number} [req.body.bpm] - Beats per minute
+ * @param {number} [req.body.duur] - Duur in seconden
+ * @param {number} [req.body.jaar] - Jaar van uitgave
+ * @param {string[]} [req.body.artiesten] - Array van artiesten
+ * @param {string[]} [req.body.genres] - Array van genres
+ * @param {string} [req.body.spotify_url] - Spotify URL
+ * @param {Object} res - Express response object
+ * @returns {Object} JSON response met geüpdatete track of error
+ */
 const patchTrack = async (req, res) => {
   try {
     const tracks = await readTracks();
@@ -214,7 +302,15 @@ const patchTrack = async (req, res) => {
   }
 };
 
-// Verwijder track, geeft 404 met leeg object als niet gevonden
+/**
+ * Verwijdert een track uit de database
+ * @async
+ * @param {Object} req - Express request object
+ * @param {Object} req.params - Route parameters
+ * @param {string} req.params.id - Track ID
+ * @param {Object} res - Express response object
+ * @returns {Object} JSON response met verwijderde track of leeg object bij 404
+ */
 const deleteTrack = async (req, res) => {
   try {
     const tracks = await readTracks();
