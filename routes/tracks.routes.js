@@ -16,8 +16,12 @@ const {
 
 /**
  * @route GET /api/tracks
- * @description Haalt alle tracks op, optioneel gesorteerd
+ * @description Haalt alle tracks op, optioneel gefilterd en gesorteerd
  * @query {string} [sort] - Sorteerrichting ('asc' of 'desc')
+ * @query {string} [naam] - Filter op naam
+ * @query {string} [artiest] - Filter op artiest
+ * @query {string} [genre] - Filter op genre
+ * @query {string} [jaar] - Filter op jaar
  * @returns {Object} JSON met success, data array en count
  */
 router.get('/', getAllTracks);

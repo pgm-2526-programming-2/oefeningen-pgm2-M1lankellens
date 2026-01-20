@@ -16,8 +16,11 @@ const {
 
 /**
  * @route GET /api/playlists
- * @description Haalt alle playlists op, optioneel gesorteerd
+ * @description Haalt alle playlists op, optioneel gefilterd en gesorteerd
  * @query {string} [sort] - Sorteerrichting ('asc' of 'desc')
+ * @query {string} [naam] - Filter op naam
+ * @query {string} [author] - Filter op author
+ * @query {string} [visibility] - Filter op visibility ('public' of 'private')
  * @returns {Object} JSON met success, data array en count
  */
 router.get('/', getAllPlaylists);
