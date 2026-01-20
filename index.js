@@ -1,21 +1,23 @@
 const express = require('express');
 const tracksRouter = require('./routes/tracks.routes');
+const playlistsRouter = require('./routes/playlists.routes');
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-//middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/tracks', tracksRouter);
+app.use('/api/playlists', playlistsRouter);
 
 app.get('/', (req, res) => {
   res.json({
-    message: 'Welcome to Mockify',
+    message: 'Welcome to Mockify API',
     version: '1.0.0',
     endpoints: {
-      tracks: '/api/tracks'
+      tracks: '/api/tracks',
+      playlists: '/api/playlists'
     }
   });
 });
