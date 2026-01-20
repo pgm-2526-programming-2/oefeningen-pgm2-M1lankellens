@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "naam": "Chill Vibes",
+    "beschrijving": "Relaxing music for studying and working",
+    "author": "Milan Kellens",
+    "visibility": "public",
+    "spotify_url": "https://open.spotify.com/playlist/37i9dQZF1DX4WYpdgoIcn6"
+  },
+  {
+    "id": 2,
+    "naam": "Workout Mix",
+    "beschrijving": "High energy tracks to power your workout",
+    "author": "Milan Kellens",
+    "visibility": "public",
+    "spotify_url": "https://open.spotify.com/playlist/37i9dQZF1DX76Wlfdnj7AP"
+  },
+  {
+    "id": 3,
+    "naam": "Road Trip Classics",
+    "beschrijving": "Perfect songs for long drives",
+    "author": "Milan Kellens",
+    "visibility": "public",
+    "spotify_url": "https://open.spotify.com/playlist/37i9dQZF1DXdPec7aLTmlC"
+  },
+  {
+    "id": 4,
+    "naam": "Late Night Jazz",
+    "beschrijving": "Smooth jazz for evening relaxation",
+    "author": "Milan Kellens",
+    "visibility": "private",
+    "spotify_url": "https://open.spotify.com/playlist/37i9dQZF1DX4wta20PHgwo"
+  },
+  {
+    "id": 5,
+    "naam": "90s Throwback",
+    "beschrijving": "The best hits from the 90s",
+    "author": "Milan Kellens",
+    "visibility": "public",
+    "spotify_url": "https://open.spotify.com/playlist/37i9dQZF1DXbTxeAdrVG2l"
+  }
+]
