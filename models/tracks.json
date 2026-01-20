@@ -1,18 +1,17 @@
 [
   {
     "id": 1,
-    "naam": "Bohemian Rhapsody",
-    "bpm": 72,
-    "duur": 355,
-    "jaar": 1975,
+    "naam": "Patched Track",
+    "bpm": 100,
+    "duur": 200,
+    "jaar": 2023,
     "artiesten": [
-      "Queen"
+      "Updated Artist"
     ],
     "genres": [
-      "Rock",
-      "Progressive Rock"
+      "Updated Genre"
     ],
-    "spotify_url": "https://open.spotify.com/track/6l8GvAyoUZwWDgF1e4822w"
+    "spotify_url": ""
   },
   {
     "id": 2,
@@ -73,5 +72,47 @@
       "Dancehall"
     ],
     "spotify_url": "https://open.spotify.com/track/7qiZfU4dY1lWllzX7mPBI3"
+  },
+  {
+    "id": 6,
+    "naam": "Test Track",
+    "bpm": 120,
+    "duur": 180,
+    "jaar": 2024,
+    "artiesten": [
+      "Test Artist"
+    ],
+    "genres": [
+      "Test Genre"
+    ],
+    "spotify_url": ""
+  },
+  {
+    "id": 7,
+    "naam": "Test Track Hoppscotch",
+    "bpm": 128,
+    "duur": 210,
+    "jaar": 2024,
+    "artiesten": [
+      "Test Artist"
+    ],
+    "genres": [
+      "Electronic"
+    ],
+    "spotify_url": ""
+  },
+  {
+    "id": 8,
+    "naam": "Test Track",
+    "bpm": 120,
+    "duur": 180,
+    "jaar": 2024,
+    "artiesten": [
+      "Test Artist"
+    ],
+    "genres": [
+      "Test Genre"
+    ],
+    "spotify_url": ""
   }
 ]

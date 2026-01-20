@@ -1,11 +1,11 @@
 [
   {
     "id": 1,
-    "naam": "Chill Vibes",
-    "beschrijving": "Relaxing music for studying and working",
-    "author": "Milan Kellens",
-    "visibility": "public",
-    "spotify_url": "https://open.spotify.com/playlist/37i9dQZF1DX4WYpdgoIcn6"
+    "naam": "Patched Playlist",
+    "beschrijving": "Updated beschrijving",
+    "author": "Updated Author",
+    "visibility": "private",
+    "spotify_url": ""
   },
   {
     "id": 2,
@@ -38,5 +38,29 @@
     "author": "Milan Kellens",
     "visibility": "public",
     "spotify_url": "https://open.spotify.com/playlist/37i9dQZF1DXbTxeAdrVG2l"
+  },
+  {
+    "id": 6,
+    "naam": "Test Playlist",
+    "beschrijving": "Test beschrijving",
+    "author": "Test Author",
+    "visibility": "public",
+    "spotify_url": ""
+  },
+  {
+    "id": 7,
+    "naam": "Test Playlist",
+    "beschrijving": "Test beschrijving",
+    "author": "Test Author",
+    "visibility": "public",
+    "spotify_url": ""
+  },
+  {
+    "id": 8,
+    "naam": "Test Playlist Hoppscotch",
+    "beschrijving": "Test beschrijving",
+    "author": "Test Author",
+    "visibility": "public",
+    "spotify_url": ""
   }
 ]
