@@ -62,5 +62,45 @@
     "author": "Test Author",
     "visibility": "public",
     "spotify_url": ""
+  },
+  {
+    "id": 9,
+    "naam": "Test Playlist",
+    "beschrijving": "Test beschrijving",
+    "author": "Test Author",
+    "visibility": "public",
+    "spotify_url": ""
+  },
+  {
+    "id": 10,
+    "naam": "Test Playlist",
+    "beschrijving": "Test beschrijving",
+    "author": "Test Author",
+    "visibility": "public",
+    "spotify_url": ""
+  },
+  {
+    "id": 11,
+    "naam": "Test Playlist",
+    "beschrijving": "Test beschrijving",
+    "author": "Test Author",
+    "visibility": "public",
+    "spotify_url": ""
+  },
+  {
+    "id": 12,
+    "naam": "Test Playlist",
+    "beschrijving": "Test beschrijving",
+    "author": "Test Author",
+    "visibility": "public",
+    "spotify_url": ""
+  },
+  {
+    "id": 13,
+    "naam": "Test Playlist",
+    "beschrijving": "Test beschrijving",
+    "author": "Test Author",
+    "visibility": "public",
+    "spotify_url": ""
   }
 ]

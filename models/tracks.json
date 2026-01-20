@@ -114,5 +114,75 @@
       "Test Genre"
     ],
     "spotify_url": ""
+  },
+  {
+    "id": 9,
+    "naam": "Test Track",
+    "bpm": 120,
+    "duur": 180,
+    "jaar": 2024,
+    "artiesten": [
+      "Test Artist"
+    ],
+    "genres": [
+      "Test Genre"
+    ],
+    "spotify_url": ""
+  },
+  {
+    "id": 10,
+    "naam": "Test Track",
+    "bpm": 120,
+    "duur": 180,
+    "jaar": 2024,
+    "artiesten": [
+      "Test Artist"
+    ],
+    "genres": [
+      "Test Genre"
+    ],
+    "spotify_url": ""
+  },
+  {
+    "id": 11,
+    "naam": "Test Track",
+    "bpm": 120,
+    "duur": 180,
+    "jaar": 2024,
+    "artiesten": [
+      "Test Artist"
+    ],
+    "genres": [
+      "Test Genre"
+    ],
+    "spotify_url": ""
+  },
+  {
+    "id": 13,
+    "naam": "Test Track Hoppscotch",
+    "bpm": 128,
+    "duur": 210,
+    "jaar": 2024,
+    "artiesten": [
+      "Test Artist"
+    ],
+    "genres": [
+      "Electronic"
+    ],
+    "spotify_url": ""
+  },
+  {
+    "id": 14,
+    "naam": "Test Track",
+    "bpm": 120,
+    "duur": 180,
+    "jaar": 2024,
+    "artiesten": [
+      "Test Artist"
+    ],
+    "genres": [
+      "Test Genre"
+    ],
+    "spotify_url": ""
   }
 ]

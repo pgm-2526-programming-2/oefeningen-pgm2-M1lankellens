@@ -1,0 +1,504 @@
+{
+  "v": 11,
+  "name": "Mockify",
+  "folders": [
+    {
+      "v": 11,
+      "name": "Tracks",
+      "folders": [],
+      "requests": [
+        {
+          "v": "17",
+          "name": "Get All Tracks",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/api/tracks",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Get All Tracks Sorted ASC",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/api/tracks?sort=asc",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Get All Tracks Sorted DESC",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/api/tracks?sort=desc",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Get All Tracks Filtered naam",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/api/tracks?naam=Billie",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Get Track by ID",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/api/tracks/1",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Get Track by ID - 404",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/api/tracks/97474",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Create Track",
+          "method": "POST",
+          "endpoint": "http://localhost:3000/api/tracks",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"naam\": \"Test Track Hoppscotch\",\n  \"bpm\": 128,\n  \"duur\": 210,\n  \"jaar\": 2024,\n  \"artiesten\": [\"Test Artist\"],\n  \"genres\": [\"Electronic\"],\n  \"spotify_url\": \"\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Create Track - 400 Validation",
+          "method": "POST",
+          "endpoint": "http://localhost:3000/api/tracks",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"naam\": \"Incomplete Track\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Update Track",
+          "method": "PUT",
+          "endpoint": "http://localhost:3000/api/tracks/1",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"id\": 1,\n  \"naam\": \"Updated Track\",\n  \"bpm\": 100,\n  \"duur\": 200,\n  \"jaar\": 2023,\n  \"artiesten\": [\"Updated Artist\"],\n  \"genres\": [\"Rock\"],\n  \"spotify_url\": \"\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Update Track - 400 Missing ID",
+          "method": "PUT",
+          "endpoint": "http://localhost:3000/api/tracks/1",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"naam\": \"Test\",\n  \"bpm\": 100,\n  \"duur\": 200,\n  \"jaar\": 2023,\n  \"artiesten\": [\"Artist\"],\n  \"genres\": [\"Genre\"]\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Patch Track",
+          "method": "PATCH",
+          "endpoint": "http://localhost:3000/api/tracks/1",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"naam\": \"Patched Track Name\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Delete Track - 404",
+          "method": "DELETE",
+          "endpoint": "http://localhost:3000/api/tracks/84747",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "description": null
+    },
+    {
+      "v": 11,
+      "name": "Playlists",
+      "folders": [],
+      "requests": [
+        {
+          "v": "17",
+          "name": "Get All Playlists",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/api/playlists",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Get All Playlists Sorted ASC",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/api/playlists?sort=asc",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Get Playlist by ID",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/api/playlists/1",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Get Playlist by ID - 404",
+          "method": "GET",
+          "endpoint": "http://localhost:3000/api/playlists/84774",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Create Playlist",
+          "method": "POST",
+          "endpoint": "http://localhost:3000/api/playlists",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"naam\": \"Test Playlist Hoppscotch\",\n  \"beschrijving\": \"Test beschrijving\",\n  \"author\": \"Test Author\",\n  \"visibility\": \"public\",\n  \"spotify_url\": \"\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Create Playlist - 400 Validation",
+          "method": "POST",
+          "endpoint": "http://localhost:3000/api/playlists",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"naam\": \"Incomplete\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Create Playlist - Invalid Visibility",
+          "method": "POST",
+          "endpoint": "http://localhost:3000/api/playlists",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"naam\": \"Test\",\n  \"beschrijving\": \"Test\",\n  \"author\": \"Test\",\n  \"visibility\": \"invalid\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Update Playlist",
+          "method": "PUT",
+          "endpoint": "http://localhost:3000/api/playlists/1",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"id\": 1,\n  \"naam\": \"Updated Playlist\",\n  \"beschrijving\": \"Updated beschrijving\",\n  \"author\": \"Updated Author\",\n  \"visibility\": \"private\",\n  \"spotify_url\": \"\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Patch Playlist",
+          "method": "PATCH",
+          "endpoint": "http://localhost:3000/api/playlists/1",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": "application/json",
+            "body": "{\n  \"naam\": \"Patched Playlist\"\n}"
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        },
+        {
+          "v": "17",
+          "name": "Delete Playlist - 404",
+          "method": "DELETE",
+          "endpoint": "http://localhost:3000/api/playlists/8884",
+          "params": [],
+          "headers": [],
+          "preRequestScript": "",
+          "testScript": "",
+          "auth": {
+            "authType": "inherit",
+            "authActive": true
+          },
+          "body": {
+            "contentType": null,
+            "body": null
+          },
+          "requestVariables": [],
+          "responses": {},
+          "description": null
+        }
+      ],
+      "auth": {
+        "authType": "inherit",
+        "authActive": true
+      },
+      "headers": [],
+      "variables": [],
+      "description": null
+    }
+  ],
+  "requests": [],
+  "auth": {
+    "authActive": true,
+    "authType": "none"
+  },
+  "headers": [],
+  "variables": [],
+  "description": ""
+}
