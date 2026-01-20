@@ -83,15 +83,15 @@ const findTrackIndex = (tracks, id) => {
  */
 const getAllTracks = async (req, res) => {
   try {
-    let tracks = await readTracks();
-    
+    const tracks = await readTracks();
+
     const { sort } = req.query;
     if (sort === 'asc') {
       tracks.sort((a, b) => a.naam.localeCompare(b.naam));
     } else if (sort === 'desc') {
       tracks.sort((a, b) => b.naam.localeCompare(a.naam));
     }
-    
+
     res.json({
       success: true,
       data: tracks,
@@ -118,11 +118,11 @@ const getTrackById = async (req, res) => {
   try {
     const tracks = await readTracks();
     const track = tracks.find(t => t.id === parseInt(req.params.id));
-    
+
     if (!track) {
       return res.status(404).json({});
     }
-    
+
     res.json({
       success: true,
       data: track
@@ -153,16 +153,16 @@ const getTrackById = async (req, res) => {
 const createTrack = async (req, res) => {
   try {
     const { error } = trackSchemaCreate.validate(req.body);
-    
+
     if (error) {
-      return res.status(400).json({ 
-        error: error.details[0].message 
+      return res.status(400).json({
+        error: error.details[0].message
       });
     }
 
     const tracks = await readTracks();
     const newId = tracks.length > 0 ? Math.max(...tracks.map(t => t.id)) + 1 : 1;
-    
+
     const newTrack = {
       id: newId,
       naam: req.body.naam,
@@ -173,10 +173,10 @@ const createTrack = async (req, res) => {
       genres: req.body.genres,
       spotify_url: req.body.spotify_url || ''
     };
-    
+
     tracks.push(newTrack);
     await writeTracks(tracks);
-    
+
     res.status(201).json({
       success: true,
       data: newTrack
@@ -210,20 +210,20 @@ const createTrack = async (req, res) => {
 const updateTrack = async (req, res) => {
   try {
     const { error } = trackSchemaUpdate.validate(req.body);
-    
+
     if (error) {
-      return res.status(400).json({ 
-        error: error.details[0].message 
+      return res.status(400).json({
+        error: error.details[0].message
       });
     }
 
     const tracks = await readTracks();
     const trackIndex = findTrackIndex(tracks, req.params.id);
-    
+
     if (trackIndex === -1) {
       return res.status(404).json({});
     }
-    
+
     const updatedTrack = {
       id: parseInt(req.params.id),
       naam: req.body.naam,
@@ -234,10 +234,10 @@ const updateTrack = async (req, res) => {
       genres: req.body.genres,
       spotify_url: req.body.spotify_url || ''
     };
-    
+
     tracks[trackIndex] = updatedTrack;
     await writeTracks(tracks);
-    
+
     res.json({
       success: true,
       data: updatedTrack
@@ -271,25 +271,25 @@ const patchTrack = async (req, res) => {
   try {
     const tracks = await readTracks();
     const trackIndex = findTrackIndex(tracks, req.params.id);
-    
+
     if (trackIndex === -1) {
       return res.status(404).json({});
     }
-    
+
     const updatedTrack = { ...tracks[trackIndex] };
     const { naam, bpm, duur, jaar, artiesten, genres, spotify_url } = req.body;
-    
-    if (naam) updatedTrack.naam = naam;
-    if (bpm) updatedTrack.bpm = bpm;
-    if (duur) updatedTrack.duur = duur;
-    if (jaar) updatedTrack.jaar = jaar;
-    if (artiesten) updatedTrack.artiesten = artiesten;
-    if (genres) updatedTrack.genres = genres;
-    if (spotify_url !== undefined) updatedTrack.spotify_url = spotify_url;
-    
+
+    if (naam) {updatedTrack.naam = naam;}
+    if (bpm) {updatedTrack.bpm = bpm;}
+    if (duur) {updatedTrack.duur = duur;}
+    if (jaar) {updatedTrack.jaar = jaar;}
+    if (artiesten) {updatedTrack.artiesten = artiesten;}
+    if (genres) {updatedTrack.genres = genres;}
+    if (spotify_url !== undefined) {updatedTrack.spotify_url = spotify_url;}
+
     tracks[trackIndex] = updatedTrack;
     await writeTracks(tracks);
-    
+
     res.json({
       success: true,
       data: updatedTrack
@@ -315,15 +315,15 @@ const deleteTrack = async (req, res) => {
   try {
     const tracks = await readTracks();
     const trackIndex = findTrackIndex(tracks, req.params.id);
-    
+
     if (trackIndex === -1) {
       return res.status(404).json({});
     }
-    
+
     const deletedTrack = tracks[trackIndex];
     tracks.splice(trackIndex, 1);
     await writeTracks(tracks);
-    
+
     res.json({
       success: true,
       data: deletedTrack

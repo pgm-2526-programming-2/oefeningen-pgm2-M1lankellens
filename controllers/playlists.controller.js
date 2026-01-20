@@ -79,15 +79,15 @@ const findPlaylistIndex = (playlists, id) => {
  */
 const getAllPlaylists = async (req, res) => {
   try {
-    let playlists = await readPlaylists();
-    
+    const playlists = await readPlaylists();
+
     const { sort } = req.query;
     if (sort === 'asc') {
       playlists.sort((a, b) => a.naam.localeCompare(b.naam));
     } else if (sort === 'desc') {
       playlists.sort((a, b) => b.naam.localeCompare(a.naam));
     }
-    
+
     res.json({
       success: true,
       data: playlists,
@@ -114,11 +114,11 @@ const getPlaylistById = async (req, res) => {
   try {
     const playlists = await readPlaylists();
     const playlist = playlists.find(p => p.id === parseInt(req.params.id));
-    
+
     if (!playlist) {
       return res.status(404).json({});
     }
-    
+
     res.json({
       success: true,
       data: playlist
@@ -147,16 +147,16 @@ const getPlaylistById = async (req, res) => {
 const createPlaylist = async (req, res) => {
   try {
     const { error } = playlistSchemaCreate.validate(req.body);
-    
+
     if (error) {
-      return res.status(400).json({ 
-        error: error.details[0].message 
+      return res.status(400).json({
+        error: error.details[0].message
       });
     }
 
     const playlists = await readPlaylists();
     const newId = playlists.length > 0 ? Math.max(...playlists.map(p => p.id)) + 1 : 1;
-    
+
     const newPlaylist = {
       id: newId,
       naam: req.body.naam,
@@ -165,10 +165,10 @@ const createPlaylist = async (req, res) => {
       visibility: req.body.visibility,
       spotify_url: req.body.spotify_url || ''
     };
-    
+
     playlists.push(newPlaylist);
     await writePlaylists(playlists);
-    
+
     res.status(201).json({
       success: true,
       data: newPlaylist
@@ -200,20 +200,20 @@ const createPlaylist = async (req, res) => {
 const updatePlaylist = async (req, res) => {
   try {
     const { error } = playlistSchemaUpdate.validate(req.body);
-    
+
     if (error) {
-      return res.status(400).json({ 
-        error: error.details[0].message 
+      return res.status(400).json({
+        error: error.details[0].message
       });
     }
 
     const playlists = await readPlaylists();
     const playlistIndex = findPlaylistIndex(playlists, req.params.id);
-    
+
     if (playlistIndex === -1) {
       return res.status(404).json({});
     }
-    
+
     const updatedPlaylist = {
       id: parseInt(req.params.id),
       naam: req.body.naam,
@@ -222,10 +222,10 @@ const updatePlaylist = async (req, res) => {
       visibility: req.body.visibility,
       spotify_url: req.body.spotify_url || ''
     };
-    
+
     playlists[playlistIndex] = updatedPlaylist;
     await writePlaylists(playlists);
-    
+
     res.json({
       success: true,
       data: updatedPlaylist
@@ -257,23 +257,23 @@ const patchPlaylist = async (req, res) => {
   try {
     const playlists = await readPlaylists();
     const playlistIndex = findPlaylistIndex(playlists, req.params.id);
-    
+
     if (playlistIndex === -1) {
       return res.status(404).json({});
     }
-    
+
     const updatedPlaylist = { ...playlists[playlistIndex] };
     const { naam, beschrijving, author, visibility, spotify_url } = req.body;
-    
-    if (naam) updatedPlaylist.naam = naam;
-    if (beschrijving) updatedPlaylist.beschrijving = beschrijving;
-    if (author) updatedPlaylist.author = author;
-    if (visibility) updatedPlaylist.visibility = visibility;
-    if (spotify_url !== undefined) updatedPlaylist.spotify_url = spotify_url;
-    
+
+    if (naam) {updatedPlaylist.naam = naam;}
+    if (beschrijving) {updatedPlaylist.beschrijving = beschrijving;}
+    if (author) {updatedPlaylist.author = author;}
+    if (visibility) {updatedPlaylist.visibility = visibility;}
+    if (spotify_url !== undefined) {updatedPlaylist.spotify_url = spotify_url;}
+
     playlists[playlistIndex] = updatedPlaylist;
     await writePlaylists(playlists);
-    
+
     res.json({
       success: true,
       data: updatedPlaylist
@@ -299,15 +299,15 @@ const deletePlaylist = async (req, res) => {
   try {
     const playlists = await readPlaylists();
     const playlistIndex = findPlaylistIndex(playlists, req.params.id);
-    
+
     if (playlistIndex === -1) {
       return res.status(404).json({});
     }
-    
+
     const deletedPlaylist = playlists[playlistIndex];
     playlists.splice(playlistIndex, 1);
     await writePlaylists(playlists);
-    
+
     res.json({
       success: true,
       data: deletedPlaylist
