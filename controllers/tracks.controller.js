@@ -73,19 +73,48 @@ const findTrackIndex = (tracks, id) => {
 };
 
 /**
- * Haalt alle tracks op met optionele sorting
+ * Haalt alle tracks op met optionele filtering en sorting
  * @async
  * @param {Object} req - Express request object
  * @param {Object} req.query - Query parameters
  * @param {string} [req.query.sort] - Sorteerrichting ('asc' of 'desc')
+ * @param {string} [req.query.naam] - Filter op naam (case-insensitive)
+ * @param {string} [req.query.artiest] - Filter op artiest (case-insensitive)
+ * @param {string} [req.query.genre] - Filter op genre (case-insensitive)
+ * @param {string} [req.query.jaar] - Filter op jaar
  * @param {Object} res - Express response object
  * @returns {Object} JSON response met tracks array en count
  */
 const getAllTracks = async (req, res) => {
   try {
-    const tracks = await readTracks();
+    let tracks = await readTracks();
+    const { sort, naam, artiest, genre, jaar } = req.query;
 
-    const { sort } = req.query;
+    // Filter op naam
+    if (naam) {
+      tracks = tracks.filter(t => t.naam.toLowerCase().includes(naam.toLowerCase()));
+    }
+
+    // Filter op artiest
+    if (artiest) {
+      tracks = tracks.filter(t =>
+        t.artiesten.some(a => a.toLowerCase().includes(artiest.toLowerCase()))
+      );
+    }
+
+    // Filter op genre
+    if (genre) {
+      tracks = tracks.filter(t =>
+        t.genres.some(g => g.toLowerCase().includes(genre.toLowerCase()))
+      );
+    }
+
+    // Filter op jaar
+    if (jaar) {
+      tracks = tracks.filter(t => t.jaar === parseInt(jaar));
+    }
+
+    // Sorteren
     if (sort === 'asc') {
       tracks.sort((a, b) => a.naam.localeCompare(b.naam));
     } else if (sort === 'desc') {

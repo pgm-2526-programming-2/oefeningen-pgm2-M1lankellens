@@ -69,19 +69,38 @@ const findPlaylistIndex = (playlists, id) => {
 };
 
 /**
- * Haalt alle playlists op met optionele sorting
+ * Haalt alle playlists op met optionele filtering en sorting
  * @async
  * @param {Object} req - Express request object
  * @param {Object} req.query - Query parameters
  * @param {string} [req.query.sort] - Sorteerrichting ('asc' of 'desc')
+ * @param {string} [req.query.naam] - Filter op naam (case-insensitive)
+ * @param {string} [req.query.author] - Filter op author (case-insensitive)
+ * @param {string} [req.query.visibility] - Filter op visibility ('public' of 'private')
  * @param {Object} res - Express response object
  * @returns {Object} JSON response met playlists array en count
  */
 const getAllPlaylists = async (req, res) => {
   try {
-    const playlists = await readPlaylists();
+    let playlists = await readPlaylists();
+    const { sort, naam, author, visibility } = req.query;
 
-    const { sort } = req.query;
+    // Filter op naam
+    if (naam) {
+      playlists = playlists.filter(p => p.naam.toLowerCase().includes(naam.toLowerCase()));
+    }
+
+    // Filter op author
+    if (author) {
+      playlists = playlists.filter(p => p.author.toLowerCase().includes(author.toLowerCase()));
+    }
+
+    // Filter op visibility
+    if (visibility) {
+      playlists = playlists.filter(p => p.visibility === visibility);
+    }
+
+    // Sorteren
     if (sort === 'asc') {
       playlists.sort((a, b) => a.naam.localeCompare(b.naam));
     } else if (sort === 'desc') {
